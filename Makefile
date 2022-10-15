@@ -19,9 +19,9 @@ HELP += help
 .PHONY: help
 help:
 	@echo "$(PROMPT)  [HELP] Available targets:"
-	@echo "$(PROMPT)  [HELP] $(sort $(HELP))"
+	@printf '$(PROMPT)  [HELP]   * %s\n' $(sort $(HELP))
 	@echo "$(PROMPT)  [HELP] Available build types (via variable \`t\`):"
-	@echo "$(PROMPT)  [HELP] $(sort $(VAR_PTS))"
+	@printf '$(PROMPT)  [HELP]   * %s\n' $(sort $(VAR_PTS))
 
 # Insert all sub-Makefiles
 include make/*.mk
