@@ -7,7 +7,7 @@ DOC_BUILD_PATH := $(ROOT_BUILD_PATH)/doc
 CKSUMS_BUILD_PATH := $(ROOT_BUILD_PATH)/sha1sums
 
 # Generate documentation
-HELP += doc
+HELP += doc~Generate_documentation
 .PHONY: doc
 doc: OUT_DIR := $(DOC_BUILD_PATH)/out
 doc: LOG_FIL := doc-log.txt
@@ -22,14 +22,14 @@ doc:
 	@touch $(DOC_BUILD_PATH)/$(LOG_FIL)
 
 # Cleanup
-HELP += clean-doc
+HELP += clean-doc~Clean_up_target
 .PHONY: clean-doc
 clean-doc:
 	rm -rf $(DOC_BUILD_PATH)/*
 	@echo "$(PROMPT)  All cleaned up"
 
 # Generate file checksums
-HELP += checksums
+HELP += checksums~Generate_file_checksums
 .PHONY: checksums
 checksums: OUT_FIL := checksums.sha1
 checksums:
@@ -45,7 +45,7 @@ checksums:
 	    > $(CKSUMS_BUILD_PATH)/$(OUT_FIL)
 
 # Cleanup
-HELP += clean-checksums
+HELP += clean-checksums~Clean_up_target
 .PHONY: clean-checksums
 clean-checksums:
 	rm -rf $(CKSUMS_BUILD_PATH)/*

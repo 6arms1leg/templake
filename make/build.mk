@@ -133,7 +133,7 @@ SANITY_CHECK = \
     $(error No/invalid build type provided via variable `t`))
 
 # Final build step: link
-HELP += $(BIN)
+HELP += $(BIN)~Build_\(compile/link\)_application_\(req._build_type\)
 .PHONY: $(BIN)
 $(BIN): LOG_FIL = $@-log.txt
 $(BIN): SHA_FIL = $@-checksums.sha1
@@ -208,7 +208,7 @@ $(OBJ_PATH)/%.asm.o: %.asm
 	@touch $@ # Remove; only used to demonstrate template
 
 # Cleanup
-HELP += clean-$(BIN)
+HELP += clean-$(BIN)~Clean_up_target_\(req._build_type\)
 .PHONY: clean-$(BIN)
 clean-$(BIN):
 	$(SANITY_CHECK)

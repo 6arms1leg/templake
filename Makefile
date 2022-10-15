@@ -15,11 +15,14 @@ PROMPT := Make:
 
 # Help (default target)
 .DEFAULT_GOAL := help
-HELP += help
+HELP += help~Print_help_message
 .PHONY: help
 help:
 	@echo "$(PROMPT)  [HELP] Available targets:"
-	@printf '$(PROMPT)  [HELP]   * %s\n' $(sort $(HELP))
+	@printf '$(PROMPT)  [HELP]   * %s\n' $(sort $(HELP)) | \
+	    sed \
+	        -e 's/~/ - /g' \
+	        -e 's/_/ /g'
 	@echo "$(PROMPT)  [HELP] Available build types (via variable \`t\`):"
 	@printf '$(PROMPT)  [HELP]   * %s\n' $(sort $(VAR_PTS))
 
@@ -27,7 +30,7 @@ help:
 include make/*.mk
 
 # Cleanup all
-HELP += clean-all
+HELP += clean-all~Clean_up_all_targets
 .PHONY: clean-all
 clean-all:
 	rm -rf $(ROOT_BUILD_PATH)/*

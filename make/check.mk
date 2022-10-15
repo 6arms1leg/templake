@@ -13,7 +13,7 @@ CK_BUILD_PATH := $(ROOT_BUILD_PATH)/check
 TODO_BUILD_PATH := $(ROOT_BUILD_PATH)/todo
 
 # Check code
-HELP += check
+HELP += check~Check_code
 .PHONY: check
 check: LOG_FIL := check-log.txt
 check:
@@ -25,14 +25,14 @@ check:
 	@touch $(CK_BUILD_PATH)/$(LOG_FIL) # Remove; only used to demonstrate template
 
 # Cleanup
-HELP += clean-check
+HELP += clean-check~Clean_up_target
 .PHONY: clean-check
 clean-check:
 	rm -rf $(CK_BUILD_PATH)/*
 	@echo "$(PROMPT)  All cleaned up"
 
 # Find ToDos in code base
-HELP += find-todo
+HELP += find-todo~Find_ToDos_in_code_base
 .PHONY: find-todo
 find-todo: OUT_FIL := todo.txt
 find-todo: TODO_MARKER := TODO:
@@ -57,7 +57,7 @@ find-todo:
 	    exit 1 || exit 0
 
 # Cleanup
-HELP += clean-find-todo
+HELP += clean-find-todo~Clean_up_target
 .PHONY: clean-find-todo
 clean-find-todo:
 	rm -rf $(TODO_BUILD_PATH)/*
