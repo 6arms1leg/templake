@@ -151,11 +151,11 @@ $(BIN):
 	    2>&1 | tee -a $(BIN_PATH)/$(LOG_FIL)
 	@echo "---" \
 	    2>&1 | tee -a $(BIN_PATH)/$(LOG_FIL)
-	@echo "Total remarks count: $$(grep -c "Remark\|remark" $(BIN_PATH)/$(LOG_FIL))" \
+	@echo "$(PROMPT)  Total remarks count: $$(grep -c "Remark\|remark" $(BIN_PATH)/$(LOG_FIL))" \
 	    2>&1 | tee -a $(BIN_PATH)/$(LOG_FIL)
-	@echo "Total warnings count: $$(grep -c "Warning\|warning" $(BIN_PATH)/$(LOG_FIL))" \
+	@echo "$(PROMPT)  Total warnings count: $$(grep -c "Warning\|warning" $(BIN_PATH)/$(LOG_FIL))" \
 	    2>&1 | tee -a $(BIN_PATH)/$(LOG_FIL)
-	@echo "Total errors count: $$(grep -c "Error\|error" $(BIN_PATH)/$(LOG_FIL))" \
+	@echo "$(PROMPT)  Total errors count: $$(grep -c "Error\|error" $(BIN_PATH)/$(LOG_FIL))" \
 	    2>&1 | tee -a $(BIN_PATH)/$(LOG_FIL)
 	@cd $(BIN_PATH)/ && \
 	    rm -f ./$(SHA_FIL) && \

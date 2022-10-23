@@ -13,13 +13,13 @@ doc: OUT_DIR := $(DOC_BUILD_PATH)/out
 doc: LOG_FIL := doc-log.txt
 doc:
 	@mkdir -p $(DOC_BUILD_PATH)/
-	@echo "$(PROMPT)  Generate documentation"
+	@echo "$(PROMPT)  Generate documentation" \
+	    2>&1 | tee $(DOC_BUILD_PATH)/$(LOG_FIL)
+# Comment in; only commented out to demonstrate template
 	#@doc-tool \
 	#    --output $(OUT_DIR)/ \
-	#    2>&1 | tee $(DOC_BUILD_PATH)/$(LOG_FIL)
-# Remove; only used to demonstrate template
-	@mkdir -p $(OUT_DIR)/
-	@touch $(DOC_BUILD_PATH)/$(LOG_FIL)
+	#    2>&1 | tee -a $(DOC_BUILD_PATH)/$(LOG_FIL)
+	@mkdir -p $(OUT_DIR)/ # Remove; only used to demonstrate template
 
 # Cleanup
 HELP += clean-doc~Clean_up_target
@@ -32,9 +32,11 @@ clean-doc:
 HELP += checksums~Generate_file_checksums
 .PHONY: checksums
 checksums: OUT_FIL := checksums.sha1
+checksums: LOG_FIL := checksums-log.txt
 checksums:
 	@mkdir -p $(CKSUMS_BUILD_PATH)/
-	@echo "$(PROMPT)  Generate checksums"
+	@echo "$(PROMPT)  Generate checksums" \
+	    2>&1 | tee $(CKSUMS_BUILD_PATH)/$(LOG_FIL)
 	@find \
 	    . \
 	    -type d \( \
@@ -42,7 +44,9 @@ checksums:
 	        -path "./$(ROOT_BUILD_PATH)*" \
 	        \) -prune -o \
 	    -type f -exec sha1sum {} + \
-	    > $(CKSUMS_BUILD_PATH)/$(OUT_FIL)
+	    2>&1 | tee \
+	        $(CKSUMS_BUILD_PATH)/$(OUT_FIL) \
+	        -a $(CKSUMS_BUILD_PATH)/$(LOG_FIL)
 
 # Cleanup
 HELP += clean-checksums~Clean_up_target

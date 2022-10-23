@@ -18,11 +18,12 @@ HELP += check~Check_code
 check: LOG_FIL := check-log.txt
 check:
 	@mkdir -p $(CK_BUILD_PATH)/
-	@echo "$(PROMPT)  Check code"
+	@echo "$(PROMPT)  Check code" \
+	    2>&1 | tee $(CK_BUILD_PATH)/$(LOG_FIL)
+# Comment in; only commented out to demonstrate template
 	#@checker \
 	#    --input $(CK_SRC_PATHS) \
-	#    2>&1 | tee $(CK_BUILD_PATH)/$(LOG_FIL)
-	@touch $(CK_BUILD_PATH)/$(LOG_FIL) # Remove; only used to demonstrate template
+	#    2>&1 | tee -a $(CK_BUILD_PATH)/$(LOG_FIL)
 
 # Cleanup
 HELP += clean-check~Clean_up_target
@@ -38,7 +39,8 @@ find-todo: OUT_FIL := todo.txt
 find-todo: TODO_MARKER := TODO:
 find-todo:
 	@mkdir -p $(TODO_BUILD_PATH)/
-	@echo "$(PROMPT)  Find ToDos in code base"
+	@echo "$(PROMPT)  Find ToDos in code base" \
+	    2>&1 | tee $(TODO_BUILD_PATH)/$(OUT_FIL)
 	@find \
 	    . \
 	    -type d \( \
@@ -47,11 +49,11 @@ find-todo:
 	        \) -prune -o \
 	    -type f -exec grep -Hn "$(TODO_MARKER)" {} + | \
 	    grep -v ":= $(TODO_MARKER)" \
-	    2>&1 | tee $(TODO_BUILD_PATH)/$(OUT_FIL) || exit 0
+	    2>&1 | tee -a $(TODO_BUILD_PATH)/$(OUT_FIL) || exit 0
 	@echo "---" \
 	    2>&1 | tee -a $(TODO_BUILD_PATH)/$(OUT_FIL)
 	@echo \
-	    "Total TODO comments count: $$(grep -c "$(TODO_MARKER)" $(TODO_BUILD_PATH)/$(OUT_FIL))" \
+	    "$(PROMPT)  Total TODO comments count: $$(grep -c "$(TODO_MARKER)" $(TODO_BUILD_PATH)/$(OUT_FIL))" \
 	    2>&1 | tee -a $(TODO_BUILD_PATH)/$(OUT_FIL)
 	@grep -q "$(TODO_MARKER)" $(TODO_BUILD_PATH)/$(OUT_FIL) && \
 	    exit 1 || exit 0
