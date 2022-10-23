@@ -157,7 +157,7 @@ $(BIN):
 	    sha1sum ./$@* > ./$(SHA_FIL)
 $(BIN_PATH)/$(BIN)1.out: LINK_DEFINE_CONFIG := link-config1
 $(BIN_PATH)/$(BIN)2.out: LINK_DEFINE_CONFIG := link-config2
-$(BIN_PATH)/$(BIN)%.out: $(OBJS)
+$(BIN_PATH)/$(BIN)%.out: $(LINK_CMD_PATH) $(OBJS)
 	@mkdir -p $(dir $@)
 	@echo "$(PROMPT)  [LD] $@"
 # Comment in; only commented out to demonstrate template
