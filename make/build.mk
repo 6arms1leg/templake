@@ -140,10 +140,15 @@ $(BIN): SHA_FIL = $@-checksums.sha1
 $(BIN):
 	$(SANITY_CHECK)
 	@mkdir -p $(BIN_PATH)/
+	@echo "$(PROMPT)  [CC] [LD] versions:" \
+	    2>&1 | tee $(BIN_PATH)/$(LOG_FIL)
+# Comment in; only commented out to demonstrate template
+	#@$(CC) --version && $(LD) --version \
+	#    2>&1 | tee -a $(BIN_PATH)/$(LOG_FIL)
 	@$(MAKE) \
 	    $(BIN_PATH)/$@1.out \
 	    $(BIN_PATH)/$@2.out \
-	    2>&1 | tee $(BIN_PATH)/$(LOG_FIL)
+	    2>&1 | tee -a $(BIN_PATH)/$(LOG_FIL)
 	@echo "---" \
 	    2>&1 | tee -a $(BIN_PATH)/$(LOG_FIL)
 	@echo "Total remarks count: $$(grep -c "Remark\|remark" $(BIN_PATH)/$(LOG_FIL))" \
