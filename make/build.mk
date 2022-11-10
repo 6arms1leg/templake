@@ -63,10 +63,12 @@ EXCL_SRC_PATHS := \
     lib/lib2/extra2 \
     $(EXCL_SRC_PATHS_VAR_PT)
 
-# Additional header include *directory* paths not already covered by source paths
+# Additional header include *directory* paths not already covered by source
+# paths (list libc paths last to allow overriding standard headers with custom
+# ones)
 #
-# Vendor compilers/linkers sometimes ship with extra headers in install
-# directory.  If needed, explicitly include their directory path here,
+# Vendor compilers/linkers usually ship with extra headers (e.g. libc) in
+# install directory.  If needed, explicitly include their directory path here,
 # providing base path and concatenating remaining relative path:
 # `$(dir $(shell which $(CC)))>REMAINING RELATIVE PATH<`
 EXTRA_INCL_PATHS := \
@@ -75,9 +77,9 @@ EXTRA_INCL_PATHS := \
 
 # Precompiled library *file* paths
 #
-# Vendor compilers/linkers somethimes ship with extra precompiled libraries in
-# install directory.  If needed, explicitly include their paths here, providing
-# base path and concatinating remaining relative path:
+# Vendor compilers/linkers usually ship with extra precompiled libraries (e.g.
+# libc) in install directory.  If needed, explicitly include their paths here,
+# providing base path and concatinating remaining relative path:
 # `$(dir $(shell which $(LD)))>REMAINING RELATIVE PATH<`
 LIB_PATHS := vendor/vendor2/vendor2-lib1.lib
 
@@ -100,8 +102,9 @@ DEPS := $(OBJS:%.o=%.d)
 -include $(DEPS)
 
 # Prepare header include directory paths based on source file paths and
-# additional header include directory paths (`sort` removes duplicates)
-INCLS := $(sort $(dir $(SRCS)) $(EXTRA_INCL_PATHS))
+# additional header include directory paths (`sort` removes duplicates; latter
+# not sorted to keep user-defined order)
+INCLS := $(sort $(dir $(SRCS))) $(EXTRA_INCL_PATHS)
 
 # Convert header include directory paths to compiler flags
 INCL_FLAGS := $(addprefix --include=,$(INCLS))
