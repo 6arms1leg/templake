@@ -4,6 +4,8 @@ make, makefile, build, build-process, embedded, embedded-systems, template,
 framework
 -->
 
+![logo](./doc/logo/logo.png)
+
 # Templake - Simple template for GNU Make
 
 This set of Makefiles provide a (almost) simple
